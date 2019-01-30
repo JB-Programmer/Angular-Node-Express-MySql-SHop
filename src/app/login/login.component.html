@@ -1,0 +1,27 @@
+<div id="LoginForm" class="container">
+  <div class="login-form">
+  <div class="main-div">
+      <div class="panel">
+        <h1>Login to start buying</h1>
+     <p>Please enter your username and password</p>
+     </div>
+     <form (submit)="onLogin(LoginForm)" #LoginForm="ngForm" id="Login" ngNativeValidate>
+
+          <div class="form-group">
+              <input type="email" name="theemail" [(ngModel)]="theemail" autocomplete="theemail" ngModel class="form-control" id="inputtheemail" placeholder="Email" #theemailInput="ngModel" required>
+          </div>
+
+          <div class="form-group">
+              <input type="password" autocomplete="current-password" name="thepassword" [(ngModel)]="thepassword" ngModel class="form-control" id="inputPassword" placeholder="Password" #thepasswordInput="ngModel" required>
+              <div *ngIf="thepasswordInput.invalid">Please, enter a valid password.</div>
+          </div>
+
+
+          <button type="submit" class="btn btn-primary">Login</button>
+
+      </form>
+      </div>
+  </div>    {{ errormessage }}</div>
+
+
+

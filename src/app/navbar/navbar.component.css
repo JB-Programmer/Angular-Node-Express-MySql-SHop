@@ -1,0 +1,28 @@
+
+ul {
+  display: flex!important;
+  list-style: none;
+  padding: 0;
+  margin: 0px;
+}
+
+
+a{
+  text-decoration: none;
+
+}
+
+nav.navbar.navbar-inverse{
+  margin-bottom: 0px;
+}
+
+.logoutbutton{
+  margin-top:9px;
+}
+
+#roleSpan{
+  margin-top: 20px!important;
+  color: white;
+  border: 1px solid grey;
+  padding: 3px 10px 3px 10px;
+}

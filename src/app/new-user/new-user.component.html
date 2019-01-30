@@ -1,0 +1,46 @@
+<div id="SignUp" class="container">
+    <div class="login-form">
+    <div class="main-div">
+        <div class="panel">
+          <h1>Sign Up</h1>
+       <p>And Start Saving Money Now</p>
+       </div>
+        <form (submit)="onSignUp(signUpForm)" #signUpForm="ngForm" id="Login" ngNativeValidate>
+            <div class="form-group">
+                <input type="text" name="thename"  [(ngModel)]="thename" autocomplete="current-thename" autocomplete="thename" ngModel class="form-control" id="inputthename" placeholder="Name" #thenameInput="ngModel" required>
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="thesurname"  [(ngModel)]="thesurname" autocomplete="current-thesurname" autocomplete="thesurname" ngModel class="form-control" id="inputthesurname" placeholder="Surname" #thesurnameInput="ngModel" required>
+            </div>
+
+            <div class="form-group">
+                  <input type="text" name="theusername" [(ngModel)]="theusername" autocomplete="current-theusername" autocomplete="username" ngModel class="form-control" id="inputUsername" placeholder="Username" #theusernameInput="ngModel" required>
+            </div>
+
+            <div class="form-group">
+                <input type="password" autocomplete="current-password" name="thepassword" [(ngModel)]="thepassword" ngModel class="form-control" id="inputPassword" placeholder="Password" #thepasswordInput="ngModel" required>
+            </div>
+
+            <div class="form-group">
+                <input type="email" name="theemail" [(ngModel)]="theemail" autocomplete="theemail" ngModel class="form-control" id="inputtheemail" placeholder="Email" #theemailInput="ngModel" required>
+            </div>
+
+            <div class="form-group">
+                <input type="number" name="thezehut" [(ngModel)]="thezehut" autocomplete="thezehut" ngModel class="form-control" id="inputthezehut" placeholder="Teudat Zehut" #thezehutInput="ngModel" required>
+            </div>
+
+            <div class="form-group">
+                <input type="text-area" name="thestreet" [(ngModel)]="thestreet" autocomplete="thestreet" ngModel class="form-control" id="inputthestreet" placeholder="Street" #thestreetInput="ngModel" required>
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="thecity" [(ngModel)]="thecity" autocomplete="thecity" ngModel class="form-control" id="inputthecity" placeholder="City" #thecityInput="ngModel" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create User</button>
+
+        </form>
+        </div>
+
+    </div></div>

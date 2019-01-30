@@ -1,0 +1,29 @@
+<p>
+  cart works!
+</p>
+
+
+<div *ngIf="products">
+  <div>
+    <div  class='centercenter' *ngFor="let product of products">
+        <div class="product-card col-sm-3 card m-3">
+
+<!--               <img class="card-img-top main-product-image" src="{{product.image}}" alt="Card image cap">
+ -->           <div class="card-body">
+                <div class="bodyNoBtn">
+                  <h5 class="card-title">Product Id: {{product.productId}}</h5>
+                  <div class="productId">Quantity {{product.quantity}}</div>
+                  <p class="card-text">Subtotal This Product {{product.subtotal}}</p>
+                </div>
+                <div>
+                  <label>Quantity</label>
+                  <input type="number" [(ngModel)]="product.quantity">
+                </div>
+                  <button (click)="deleteFormCart(product)" class="btn btn-danger">Delete Product</button>
+
+              </div>
+
+        </div>
+    </div>
+  </div>
+</div>
