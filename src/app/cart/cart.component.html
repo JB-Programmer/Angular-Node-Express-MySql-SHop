@@ -1,29 +1,83 @@
-<p>
-  cart works!
-</p>
+<h1 style="text-align: center; margin: 30px auto">My Cart</h1>
+<hr>
 
+    <div class="container"*ngIf="products && screen=='1'">
+      <div class="row">
+      <div>
+        <div  class='centercenter' *ngFor="let product of products">
+          <div class="product-card col-sm-3 card m-3">
 
-<div *ngIf="products">
-  <div>
-    <div  class='centercenter' *ngFor="let product of products">
-        <div class="product-card col-sm-3 card m-3">
+  <!--               <img class="card-img-top main-product-image" src="{{product.image}}" alt="Card image cap">
+  -->           <div class="card-body">
+                  <div class="bodyNoBtn">
+                    <h5 class="card-title">Product Id: {{product.productId}}</h5>
+                    <div class="productId">Quantity <br>{{product.quantity}}</div>
+                    <p class="card-text">Subtotal: {{product.subtotal}}</p>
+                  </div>
+                  <div>
+                    <label>Quantity</label>
+                    <input type="text" [(ngModel)]="product.quantity" ng-readonly="true" id="thepointernone">
+                  </div>
+                  <div>
+                    <button (click)="deleteProductFromCart(product)" class="btn btn-danger">Delete Product From Cart</button>
+                  </div>
 
-<!--               <img class="card-img-top main-product-image" src="{{product.image}}" alt="Card image cap">
- -->           <div class="card-body">
-                <div class="bodyNoBtn">
-                  <h5 class="card-title">Product Id: {{product.productId}}</h5>
-                  <div class="productId">Quantity {{product.quantity}}</div>
-                  <p class="card-text">Subtotal This Product {{product.subtotal}}</p>
                 </div>
-                <div>
-                  <label>Quantity</label>
-                  <input type="number" [(ngModel)]="product.quantity">
-                </div>
-                  <button (click)="deleteProductFromCart(product)" class="btn btn-danger">Delete Product From Cart</button>
-
-              </div>
-
+          </div>
         </div>
+      </div>
+    </div>
+  <div class="row centercenter">
+    <div class="container">
+      <button (click)="checkout()" class="btn btn-success checkoutbutton">Checkout</button>
     </div>
   </div>
 </div>
+
+
+
+
+
+
+<div *ngIf="products && screen=='2'" id="Order">
+    <div class="login-form">
+        <div class="main-div">
+            <div class="panel">
+              <h1>Checkout now</h1>
+           <p>Please enter your username and password</p>
+           </div>
+              <div>
+              <div class="row">
+                <div class="center container col-sm-12">
+
+                    <form (submit)="onOrder(OrderForm)" #OrderForm="ngForm" id="Ordernow" ngNativeValidate>
+
+                      <div class="form-group">
+                          <input type="text" name="thecity" [(ngModel)]="thecity"  ngModel class="form-control" id="inputthecity" placeholder="Your City" #thecityInput="ngModel" required>
+                      </div>
+
+                      <div class="form-group">
+                        <input type="text" name="thestreet" [(ngModel)]="thestreet"  ngModel class="form-control" id="inputthestreet" placeholder="Your Street" #thestreetInput="ngModel" required>
+                    </div>
+
+                    <div class="form-group">
+                      <input type="text" name="theshipping" [(ngModel)]="theshipping"  ngModel class="form-control" id="inputtheshipping" placeholder="The shipping date" #theshippingInput="ngModel" required>
+                    </div>
+
+
+                      <button type="submit" class="btn btn-primary">Order Now</button>
+
+                    </form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="center container col-sm-12">
+                  <button (click)="backToCart()" class="btn btn-basic checkoutbutton">Back To Cart</button>
+                </div>
+              </div>
+</div>
+</div>
+
+</div>
+
+

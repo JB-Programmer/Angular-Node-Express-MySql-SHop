@@ -566,6 +566,50 @@ app.route('/deleteproductfromcart').post(checkAuth, (req,res)=>{
 })
 
 
+//Delete product from cart
+/* app.route('/deleteproductfromcart').post(checkAuth, (req,res)=>{
+
+  const userId = req.userData.id;
+  const productId = req.body.productId;
+  console.log("This is the userid");
+  console.log(userId);
+
+  console.log("This is the product id--------------");
+  console.log(productId);
+  //res.status(200).send();
+
+  con.query(`SELECT id FROM carts WHERE userId=${userId}`, (err,data)=>{
+
+    if(err){
+      console.log(err);
+      console.log("Error getting cartId");
+      res.status(400).send(err);
+    }else{
+
+      const cartId = data[0].id;
+      console.log(cartId);
+
+      con.query(`DELETE FROM cartelements WHERE productId='${productId}'`, (err, result)=>{
+        console.log(productId);
+        console.log(err);
+        if(err){
+          console.log("Error Deleting from cart");
+          //console.log(result.affectedRows);
+          res.status(400).send(err);
+        }else {
+          console.log("Product deleted successfully!!!");
+          //console.log(result.affectedRows);
+          res.status(200).send(result);
+        }
+      });
+    }
+  });
+
+
+
+}) */
+
+
 //Updating an product
 app.route('/product/:id').put((req,res)=>{
   const prodToUpdate = req.params['id'];

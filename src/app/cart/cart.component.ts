@@ -12,7 +12,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class CartComponent implements OnInit {
   products: any;
+  screen = '1';
 
+  // tslint:disable-next-line:max-line-length
   constructor( private authService: AuthService, private cartservice: CartService, private theRoute: ActivatedRoute, private router: Router ) {
 
   }
@@ -48,6 +50,19 @@ export class CartComponent implements OnInit {
     this.getProducts();
   }
 
+
+  checkout() {
+    //Change the screen
+    this.screen = '2';
+
+
+
+  }
+
+
+  backToCart() {
+    this.screen = '1';
+  }
 
 
 }
