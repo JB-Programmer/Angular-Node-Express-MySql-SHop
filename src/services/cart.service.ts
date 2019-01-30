@@ -44,13 +44,11 @@ export class CartService implements OnInit{
   }
 
 
-/*   deleteProductFromCart(prod) {
-    return  this.http.post('http://localhost:4040/deleteproductfromcart', prod)
-    .subscribe(response => {
-       console.log(response);
-    });
+  deleteProdFromCart(prod) {
+    console.log(prod);
+    return  this.http.post('http://localhost:4040/deleteproductfromcart', prod);
 
-  } */
+  }
 
 /* createProduct(name: string, category: string, description: string, price: number, image: string){
     // const theNewProduct: Product = {name: name, category: category, description: description, price: price, image: image};

@@ -39,10 +39,13 @@ export class CartComponent implements OnInit {
       });
   }
 
-  deleteFormCart(product) {
-    alert("This is the product ID in the list of all products of our shop" + product.productId);
-    alert("This is the product ID of cart elements: THIS I have to delete" + product.id);
-    //Ojo, hay que borrar el product.id que es el id del cartelement
+  deleteProductFromCart(product) {
+    //alert("This is the product ID in the list of all products of our shop" + product.productId);
+    this.cartservice.deleteProdFromCart(product)
+    .subscribe(res => {
+      console.log("PRODDUCT DELETED");
+    });
+    this.getProducts();
   }
 
 
