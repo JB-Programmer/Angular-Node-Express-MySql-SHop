@@ -16,8 +16,13 @@ nav.navbar.navbar-inverse{
   margin-bottom: 0px;
 }
 
-.logoutbutton{
+.botonsillo{
   margin-top:9px;
+  margin-right: 20px;
+}
+
+.botonsillo a{
+  color: white;
 }
 
 #roleSpan{

@@ -445,8 +445,8 @@ app.route('/product/:id').get((req, res)=>{
 app.route('/newproduct').post(checkAuth, multer({ storage: storage }).single("image"),
 (req, res, next) =>{
   const userRole = req.userData.role;
-  console.log("THE USER ROLEEEEEEEEEE");
-  console.log(userRole);
+/*   console.log("THE USER ROLEEEEEEEEEE");
+  console.log(userRole); */
   if(userRole != 'admin'){
     console.log("User is trying to add a new product");
     res.status(400).json({message: "Adding produts is just for admin"});
@@ -456,8 +456,8 @@ app.route('/newproduct').post(checkAuth, multer({ storage: storage }).single("im
   console.log(bodyreq);
   const categoryName = req.body.category;
   let categoryId;
-  console.log("This is the category name");
-  console.log(categoryName);
+ /*  console.log("This is the category name");
+  console.log(categoryName); */
   con.query(`SELECT id FROM categories WHERE categoryName='${categoryName}'`,  (err, data)=>{
     if(err){
       console.log(err);
@@ -476,10 +476,10 @@ app.route('/newproduct').post(checkAuth, multer({ storage: storage }).single("im
             res.status(400).send();
             }else{
             console.log("Yes! Product added successfully");
-            console.log(bodyreq);
+           /*  console.log(bodyreq);
             console.log("Category id calculated correctly");
             console.log("This is the id");
-            console.log(categoryId);
+            console.log(categoryId); */
 
             res.status(200).send();
             }
@@ -504,7 +504,6 @@ app.route('/producttocart').post(checkAuth, (req, res) => {
 
   con.query(`SELECT id FROM carts WHERE userId=${userId} and finished='0'`, (err,data)=>{
     if(err){
-      console.log(err);
       console.log("Error getting cartId");
       res.status(400).send(err);
     }else{
@@ -515,7 +514,7 @@ app.route('/producttocart').post(checkAuth, (req, res) => {
         if(err){
           console.log("Error Getting the price");
         }else {
-          console.log(precio[0].price);
+          //console.log(precio[0].price);
           const theprice = precio[0].price;
           const subtotal = theprice * quantity;
           con.query(`SELECT * FROM cartelements WHERE cartId='${cartId}' AND productid='${productId}'`, (err, rows) => {
@@ -528,7 +527,6 @@ app.route('/producttocart').post(checkAuth, (req, res) => {
                         console.log("Product wasnt inserted into cart");
                         res.status(400);
                     } else {
-                        console.log("Cart number" + cartId + "has been successfully updated. This is the product:" + productId);
                         console.log("Product has been inserted into cart successfully");
                         res.status(200).send();
                     }
@@ -537,7 +535,7 @@ app.route('/producttocart').post(checkAuth, (req, res) => {
                 con.query(`UPDATE cartelements SET quantity=${quantity}, subtotal=${subtotal}  WHERE cartId=${cartId} AND productid=${productId}`, (err, rows) => {
                     if (err) {
                         console.log("Cart couldnt be updated")
-                        console.log(err);
+                        //console.log(err);
                         res.status(400);
 
                     } else {

@@ -29,6 +29,10 @@
 
 }
 
+.main-product-image{
+  height: 200px;
+}
+
 .category-products-block{
   text-align: center;
   margin:auto;
@@ -53,7 +57,7 @@
 
 .container-fluid{
   max-height: 50px;
-  background-color: grey;
+  background-color: #fdd861;
   color: black;
 }
 

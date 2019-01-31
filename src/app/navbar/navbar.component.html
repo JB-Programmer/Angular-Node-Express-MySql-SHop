@@ -8,13 +8,12 @@
         <li><a *ngIf="userIsAuthenticated" [routerLink]="['/category']" routerLinkActive="router-link-active">Categories</a></li>
         <li><a *ngIf="userIsAuthenticated" [routerLink]="['/mycart']" routerLinkActive="router-link-active">My Cart</a></li>
 
-        <li><a *ngIf="!userIsAuthenticated" [routerLink]="['/newuser']" routerLinkActive="router-link-active">New User</a></li>
-<!--         <li ><a><span id="roleSpan">{{ role }}</span></a></li>
- -->    <li><a *ngIf="userIsAuthenticated" [routerLink]="['/addproduct']" routerLinkActive="router-link-active">Add product</a></li>
-        <li><button class="btn logoutbutton" *ngIf="!userIsAuthenticated"><a  [routerLink]="['/login']" routerLinkActive="router-link-active">Login</a></button></li>
+        <li><button  class="btn btn-success botonsillo" *ngIf="!userIsAuthenticated" ><a [routerLink]="['/newuser']" routerLinkActive="router-link-active">New User</a></button></li>
+        <li><a  *ngIf="userIsAdmin" [routerLink]="['/addproduct']" routerLinkActive="router-link-active">Add product</a></li>
+        <li><button class="btn botonsillo" *ngIf="!userIsAuthenticated"><a  [routerLink]="['/login']" routerLinkActive="router-link-active">Login</a></button></li>
 
-        <li><button class="btn logoutbutton" *ngIf="userIsAuthenticated" (click)="onLogout()">Log out</button></li>
-
+        <li><button class="btn botonsillo" *ngIf="userIsAuthenticated" (click)="onLogout()">Log out</button></li>
+          <li style="color:white">{{ hisRole }}</li>
       </ul>
 
 

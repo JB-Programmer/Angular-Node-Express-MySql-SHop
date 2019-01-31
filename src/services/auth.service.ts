@@ -23,6 +23,7 @@ export class AuthService {
   private authStatusListener = new Subject<boolean>();
   private city: string;
   private street: string;
+  private adminListener = new Subject<boolean>();
 
 
 
@@ -55,6 +56,10 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
+  getAdminListener(){
+    return this.adminListener.asObservable();
+  }
+
   getFullResponse() {
     return this.fullResponse;
   }
@@ -63,9 +68,13 @@ export class AuthService {
   createUser(name: string, surname: string, username: string, password: string, email: string, zehut: number, street: string, city: string) {
     // tslint:disable-next-line:max-line-length
     const theDataObject: UserDataFull = {name: name, surname: surname, username: username, password: password, email: email, zehut: zehut, street: street, city: city };
-    this.http.post('http://localhost:4040/signupuser', theDataObject)
+    this.http.post<{name:string}>('http://localhost:4040/signupuser', theDataObject)
     .subscribe(response => {
       console.log(response);
+      if(response.name){
+        this.router.navigate(['/login']);
+
+      }
     });
   }
 
@@ -97,6 +106,11 @@ export class AuthService {
               this.isAuthenticatedNow = true;
               //console.log(response);
               this.authStatusListener.next(true);
+              console.log(this.userRole);
+
+              if(this.userRole === 'admin') {
+                this.adminListener.next(true);
+              }
               const now = new Date();
               const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
               this.saveAuthData(token, expirationDate, this.userRole);
@@ -125,6 +139,7 @@ export class AuthService {
     this.token = null;
     this.isAuthenticatedNow = false;
     this.authStatusListener.next(false);
+    this.adminListener.next(false);
     this.userRole = 'null';
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
@@ -135,7 +150,7 @@ export class AuthService {
 
   private setAuthTimer(duration: number){
 
-    console.log('Setting timer ' + duration)
+    console.log('Setting timer ' + duration);
     this.tokenTimer = setTimeout(() => {
       this.logout();
     }, duration * 1000);
@@ -174,6 +189,13 @@ export class AuthService {
       this.isAuthenticatedNow = true;
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
+      if(this.userRole==='admin'){
+        this.adminListener.next(true);
+
+      }else{
+        this.adminListener.next(false);
+
+      }
       console.log('User has been authenticated automatically with his token');
     }
 

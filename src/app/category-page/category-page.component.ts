@@ -4,6 +4,7 @@ import { DataService } from './../../services/data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { CartService } from 'src/services/cart.service';
+import { AuthService } from 'src/services/auth.service';
 
 
 
@@ -19,7 +20,7 @@ export class CategoryPageComponent implements OnInit {
   categoryps;
   theCategory;
 
-  constructor( private getdata: DataService, private theRoute: ActivatedRoute, private router: Router, private cartService: CartService ) {
+  constructor( private getdata: DataService, private theRoute: ActivatedRoute, private router: Router, private cartService: CartService, private authService: AuthService ) {
 
   }
 
@@ -33,7 +34,6 @@ export class CategoryPageComponent implements OnInit {
 
 
   }
-
 
   getMilk() {
     this.getdata.getMilkyProducts()

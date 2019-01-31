@@ -51,11 +51,11 @@ import { CartComponent } from './cart/cart.component';
       {
         path: 'category',
         component: CategoryPageComponent, canActivate: [AuthGuard],
-        children: [
+        /* children: [
           {path: '', component: CategoryPageComponent},
           {path: 'Milky', component: CategoryPageComponent},
           {path: 'Bread', component: CategoryPageComponent},
-        ]
+        ] */
       },
       {
         path: 'login',

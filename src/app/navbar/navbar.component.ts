@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DataService } from './../../services/data.service';
 import { ActivatedRoute, Route } from '@angular/router';
 
@@ -17,16 +17,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
   allCategoryNames: any;
   thelink;
   private authListenerSubs: Subscription;
+  private adminListenerSubs: Subscription;
   userIsAuthenticated = false;
   userIsAdmin = false;
   role: string;
+
+  @Input() hisRole: string;
 
   constructor(private getdata: DataService, private authService: AuthService, private theRoute: ActivatedRoute, private router: Router) { }
 
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
-    if(this.userIsAuthenticated){
+    if(this.userIsAuthenticated) {
       this.role = this.authService.getRole();
       //console.log("EL ROOOOOOOOOOOOOOLEEEEEEEEEEEEEEEEEEEEEEE");
       //console.log(this.role);
@@ -43,15 +46,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     });
 
+    this.adminListenerSubs = this.authService.getAdminListener().subscribe(isAdmin=>{
+        this.userIsAdmin = isAdmin;
+    })
+
   }
 
   ngOnDestroy() {
-    this.authListenerSubs.unsubscribe();
     this.role = null;
+    this.authListenerSubs.unsubscribe();
+
   }
 
   onLogout() {
+    this.role= null;
     this.authService.logout();
+
     console.log("User has logged out successfully");
   }
 

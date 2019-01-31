@@ -12,6 +12,10 @@ input[type="file"] {
   visibility: hidden;
 }
 
+.insertImage{
+  width:100%;
+}
+
 #AddProduct{ background:
   -webkit-linear-gradient(135deg, hsla(208.3, 46.33%, 55.47%, 1) 15%, hsla(208.3, 46.33%, 55.47%, 0) 80%),
   -webkit-linear-gradient(205deg, hsla(253.58, 92.43%, 43.8%, 1) 100%, hsla(253.58, 92.43%, 43.8%, 0) 70%);
