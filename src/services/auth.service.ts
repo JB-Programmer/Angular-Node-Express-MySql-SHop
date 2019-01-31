@@ -21,6 +21,9 @@ export class AuthService {
   private userId: string;
   private userRole: string;
   private authStatusListener = new Subject<boolean>();
+  private city: string;
+  private street: string;
+
 
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -114,6 +117,9 @@ export class AuthService {
     return this.theReceivedMessage;
   }
 
+  userFullData(){
+    return this.http.get<{data:any}>('http://localhost:4040/getUserInfo');
+  }
 
   logout() {
     this.token = null;

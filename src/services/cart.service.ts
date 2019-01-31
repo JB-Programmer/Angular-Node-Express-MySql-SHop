@@ -43,6 +43,10 @@ export class CartService implements OnInit{
 
   }
 
+  closeTheCart() {
+    return  this.http.get<{message: any}>('http://localhost:4040/closecart');
+  }
+
 
   deleteProdFromCart(prod) {
     console.log(prod);

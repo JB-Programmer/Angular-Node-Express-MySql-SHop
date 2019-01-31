@@ -217,7 +217,7 @@ app.route('/users').get((req,res)=>{
 
 //Check if exist this user (by teudat zehut), if exist return in body=1, if not, returns body-0
 app.route('/existuser').post((req,res)=>{
-  console.log("Client wants to check if exist user with this teudat zehut");
+  console.log("Browser wants to check if exist user with this teudat zehut");
   con.query(`SELECT * FROM users WHERE zehut=${req.body.zehut}`, (err,rows)=>{
     if(err){
       console.log(err);
@@ -268,7 +268,7 @@ app.route('/signupuser').post((req,res)=>{
 app.route('/checkifhascart').get(checkAuth, (req,res)=>{
   console.log("Checking if user has cart");
   const userId= req.userData.id;
-  con.query(`SELECT * FROM carts WHERE userId='${userId}'`, (err,data)=>{
+  con.query(`SELECT * FROM carts WHERE userId='${userId}' AND finished='0'`, (err,data)=>{
     if(err){
       console.log(err);
       console.log("Error checking if user has cart");
@@ -298,7 +298,7 @@ app.route('/checkifhascart').get(checkAuth, (req,res)=>{
           }else{
               //console.log(data.length);
               console.log("User hadnt car Active so i created it :)");
-              res.status(201).json(JSON.stringify({"message": "New create has been created to this user"}));
+              res.status(201).json({message: "New create has been created to this user"});
 
           }
 
@@ -468,7 +468,7 @@ app.route('/producttocart').post(checkAuth, (req, res) => {
 
   //res.status(200).send();
 
-  con.query(`SELECT id FROM carts WHERE userId=${userId}`, (err,data)=>{
+  con.query(`SELECT id FROM carts WHERE userId=${userId} and finished='0'`, (err,data)=>{
     if(err){
       console.log(err);
       console.log("Error getting cartId");
@@ -521,6 +521,22 @@ app.route('/producttocart').post(checkAuth, (req, res) => {
 
 });
 
+app.route('/getUserInfo').get(checkAuth, (req,res)=>{
+  const userId = req.userData.id;
+
+  con.query(`SELECT * FROM users WHERE id=${userId}`, (err,data)=>{
+    if(err){
+      console.log(err);
+      console.log("Error getting infoAboutUser");
+      res.status(400).send(err);
+    }else{
+      console.log(data);
+      res.status(200).send(data);
+    }
+
+  })
+
+});
 
 //Delete product from cart
 app.route('/deleteproductfromcart').post(checkAuth, (req,res)=>{
@@ -609,6 +625,46 @@ app.route('/deleteproductfromcart').post(checkAuth, (req,res)=>{
 
 }) */
 
+
+//Closing cart
+app.route('/closecart').get(checkAuth, (req,res)=>{
+  const userId = req.userData.id;
+
+  //res.status(200).send();
+
+  con.query(`SELECT id FROM carts WHERE userId=${userId}`, (err,data)=>{
+
+    if(err){
+      console.log(err);
+      console.log("Error getting cartId");
+      res.status(400).send(err);
+    }else{
+
+      const cartId = data[0].id;
+      console.log(cartId);
+
+      con.query(`UPDATE carts SET finished='1' WHERE id='${cartId}'`, (err, result)=>{
+        console.log(err);
+        if(err){
+          console.log("Error Closing CArt");
+          //console.log(result.affectedRows);
+          res.status(400).send(err);
+        }else {
+          console.log("Cart closed Successfully");
+          //console.log(result.affectedRows);
+          res.status(200).json({message: 'carritoCerrado'});
+        }
+      });
+    }
+  });
+
+
+
+
+
+
+
+});
 
 //Updating an product
 app.route('/product/:id').put((req,res)=>{

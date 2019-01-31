@@ -29,7 +29,9 @@
     </div>
   <div class="row centercenter">
     <div class="container">
-      <button (click)="checkout()" class="btn btn-success checkoutbutton">Checkout</button>
+      <button *ngIf="products!='' && screen=='1'" (click)="checkout()" class="btn btn-success checkoutbutton">Checkout</button>
+      <button *ngIf="products==''" (click)="startShipping()" class="btn btn-success checkoutbutton">Explore our shop to start ordering</button>
+
     </div>
   </div>
 </div>
@@ -79,5 +81,13 @@
 </div>
 
 </div>
+</div>
 
 
+<div *ngIf="products && screen=='3'" id="Order">
+  <h1>Thank you for your order!</h1>
+
+</div>
+
+<!-- <button (click)="giveMeData()" class="btn btn-basic checkoutbutton">give me data</button>
+ -->
