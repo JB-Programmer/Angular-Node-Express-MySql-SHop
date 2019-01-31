@@ -30,9 +30,9 @@ export class AddProductComponent implements OnInit {
       }),
       'thedescription': new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]
       }),
-      'theprice': new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]
+      'theprice': new FormControl(null, {validators: [Validators.required, Validators.minLength(1)]
       }),
-      'thecategory': new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]
+      'thecategory': new FormControl(null, {validators: [Validators.required, Validators.minLength(2)]
       }),
       'image' : new FormControl(null, {validators: [Validators.required], asyncValidators:[mimeType]})
     });
@@ -46,25 +46,18 @@ export class AddProductComponent implements OnInit {
 
   onAddProduct() {
     //const therole = this.authService.getRole();
+    console.log("On Add Product Called this is the data that goes to form");
+    console.log(this.form.value);
 
     if (this.form.invalid) {
+      console.log("Form invalid");
       return;
     }
-    console.log(this.form.value);
     // tslint:disable-next-line:max-line-length
     this.dataService.createProduct(this.form.value.theproductname, this.form.value.thecategory, this.form.value.thedescription, this.form.value.theprice, this.form.value.image);
     this.form.reset();
+    console.log("Product added successfully");
     return;
-
-
-
-      //console.log(form.value);
-      // tslint:disable-next-line:max-line-length
-
-      // tslint:disable-next-line:max-line-length
-
-      // Despues de haber sido creado el objeto, quiero pasar el post completo como argumento
-      //this.productCreated.emit(product);
 
 
   }

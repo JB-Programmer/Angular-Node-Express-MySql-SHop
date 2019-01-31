@@ -29,15 +29,15 @@ const storage = multer.diskStorage({
     //I check also in the backend that the file is a picture;
     const isValid = MIME_TYPE_MAP[file.mimetype];
     let error = new Error('Invalid mime type');
-    if(isValid){
+    if(false){
       error = null;
     }
-    cb(error, "./src/assets/productImages");
+    cb(error, DIR);
   },
   filename: (req,file,cb)=>{
     const name = file.originalname.toLocaleLowerCase.split(' ').join('-');
     const ext = MIME_TYPE_MAP[file.mimetype];
-    cb(null, name + '-' + Date.now() + '.' + ext);
+    cb(null, name + '-' + "fileuploaded" + '.' + ext);
   }
 });
 
@@ -449,14 +449,19 @@ app.route('/newproduct').post( multer({storage:storage}).single("image"), (req, 
   console.log(categoryName);
   con.query(`SELECT id FROM categories WHERE categoryName='${categoryName}'`,  (err, data)=>{
     if(err){
-      console.log(err);
-      console.log("Calculating the category Id failed");
+/*       console.log(err);
+      console.log("Calculating the category Id failed"); */
       res.send(err);
     }else{
-
+/*       console.log("This is the file");
+      //console.log(req.file.filename);
+      console.log("This is the image");
+      console.log(req.file.filename);
+      console.log("This is the bodyrequest");
+      console.log(bodyreq.image); */
       categoryId = data[0].id;
       con.query(`INSERT INTO products (name, price, category, description, image) values
-      ('${req.body.name}', '${req.body.price}', '${categoryId}','${req.body.description}','${req.body.image}')`,
+      ('${req.body.name}', '${req.body.price}', '${categoryId}','${req.body.description}','../image/image')`,
       (err)=>{
             if(err){
             console.log(err);

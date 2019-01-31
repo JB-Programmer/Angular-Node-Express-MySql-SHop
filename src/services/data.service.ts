@@ -54,7 +54,7 @@ export class DataService {
 */
 
 
-createProduct(name: string, category: string, description: string, price: any, image:File){
+createProduct(name: string, category: string, description: string, price: any, image: File){
     const theData = new FormData();
     theData.append("name", name);
     theData.append("category", category);
@@ -65,7 +65,9 @@ createProduct(name: string, category: string, description: string, price: any, i
     // const theNewProduct: Product = {name: name, category: category, description: description, price: price, image: image};
     const theNewProduct = {name: name, category: category, description: description, price: price, image: image};
     console.log("http post /newproduct has been called");
-    console.log(theNewProduct);
+    //console.log(theNewProduct);
+    console.log("Esta es la imagen");
+    console.log(theNewProduct.image);
     return this.http.post('http://localhost:4040/newproduct', theNewProduct)
     .subscribe(response => {
       console.log(response);

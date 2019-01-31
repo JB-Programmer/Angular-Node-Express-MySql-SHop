@@ -42,6 +42,7 @@ export class CategoryPageComponent implements OnInit {
         this.productsByCat = res;
         console.log("Milk products retrieved");
         this.theCategory = "Milky products";
+        console.log(res);
       });
   }
 

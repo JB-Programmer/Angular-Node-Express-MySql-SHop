@@ -11,6 +11,15 @@
   height:100px;
 }
 
+.price{
+  color: navy;
+  font-size: 20px;
+}
+
+.product-card.col-sm-3.card.m-3 {
+  min-height: 414px!important;
+}
+
 .product-card{
   border-radius: 50px 20px;
   border: 1px solid grey;

@@ -28,8 +28,9 @@
                      <!--  <p class="card-text">PRICE: {{product.price}}</p> -->
                   </div>
                   <div>
-                    <label>Quantity</label>
-                    <input type="number" [(ngModel)]="product.quantity">
+                    <p class="card-text price"><strong>Price: {{product.price}} NIS</strong></p>
+                    <label>Quantity</label><br>
+                    <input type="number" [(ngModel)]="product.quantity" style="width:20%;">
                   </div>
                     <button (click)="addProduct(product)" class="btn btn-success">Add to cart</button>
 <!--                     <button (click)="deleteProduct(product)" class="btn btn-danger">Delete Product</button>
