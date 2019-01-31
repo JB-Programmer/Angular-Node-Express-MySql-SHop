@@ -1,3 +1,4 @@
+//This is the old App2. PLEASE JUST USE APP.1.JS
 
 const express = require("express");
 const cors = require("cors");
