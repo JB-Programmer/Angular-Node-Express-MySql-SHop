@@ -8,7 +8,9 @@
 
 }
 
-
+input[type="file"] {
+  visibility: hidden;
+}
 
 #AddProduct{ background:
   -webkit-linear-gradient(135deg, hsla(208.3, 46.33%, 55.47%, 1) 15%, hsla(208.3, 46.33%, 55.47%, 0) 80%),

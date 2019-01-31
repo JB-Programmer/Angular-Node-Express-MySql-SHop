@@ -1,9 +1,9 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { DataService } from './../../services/data.service';
-import { ActivatedRoute, ROUTER_CONFIGURATION } from '@angular/router';
+import { ActivatedRoute, ROUTER_CONFIGURATION, ParamMap } from '@angular/router';
 import {AuthService } from '../../services/auth.service';
-import {mimeType} from './mime-type.validator';
+import { mimeType } from './mime-type.validator';
 
 @Component({
   selector: 'app-add-product',
@@ -20,6 +20,9 @@ export class AddProductComponent implements OnInit {
   thecategory: any;
   theproductid;
   imagePreview;
+  private mode = 'create';
+  private productId: string;
+
   @Output() productCreated = new EventEmitter();
 
   constructor( private authService: AuthService, private dataService: DataService, private myRoute: ActivatedRoute ) { }
@@ -34,9 +37,32 @@ export class AddProductComponent implements OnInit {
       }),
       'thecategory': new FormControl(null, {validators: [Validators.required, Validators.minLength(2)]
       }),
-      'image' : new FormControl(null, {validators: [Validators.required], asyncValidators:[mimeType]})
+      'image' : new FormControl(null, {validators: [Validators.required], asyncValidators: [mimeType]})
     });
 
+    this.myRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('productId')) {
+/*         this.mode = "edit";
+        this.productId = paramMap.get('productId');
+        this.dataService.getPost(this.postId).subscribe(postData => {
+          this.isLoading = false;
+          this.product = {
+            id: postData._id,
+            title: postData.title,
+            content: postData.content,
+            imagePath: postData.imagePath
+          };
+          this.form.setValue({
+            title: this.post.title,
+            content: this.post.content,
+            image: this.post.imagePath
+          });
+        }); */
+      } else {
+        /* this.mode = "create";
+        this.postId = null; */
+      }
+    });
 
     this.dataService.getCategoriesNames()
     .subscribe(res=> {
@@ -46,36 +72,32 @@ export class AddProductComponent implements OnInit {
 
   onAddProduct() {
     //const therole = this.authService.getRole();
-    console.log("On Add Product Called this is the data that goes to form");
+    console.log('On Add Product Called this is the data that goes to form');
     console.log(this.form.value);
 
     if (this.form.invalid) {
-      console.log("Form invalid");
+      console.log('Form invalid');
       return;
     }
     // tslint:disable-next-line:max-line-length
     this.dataService.createProduct(this.form.value.theproductname, this.form.value.thecategory, this.form.value.thedescription, this.form.value.theprice, this.form.value.image);
     this.form.reset();
-    console.log("Product added successfully");
+    console.log('Product added successfully');
     return;
 
 
   }
 
 
-  onImagePicked(event: Event){
+  onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.form.patchValue({image: file});
+    this.form.patchValue({ image: file });
     this.form.get('image').updateValueAndValidity();
-    console.log(file);
-    //console.log(this.form);
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = <string>reader.result;
-    }
+    };
     reader.readAsDataURL(file);
-
-
   }
 }
 

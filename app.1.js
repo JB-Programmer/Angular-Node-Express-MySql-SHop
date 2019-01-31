@@ -25,19 +25,21 @@ const MIME_TYPE_MAP = {
 }
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) =>{
-    //I check also in the backend that the file is a picture;
+  destination: (req, file, cb) => {
     const isValid = MIME_TYPE_MAP[file.mimetype];
-    let error = new Error('Invalid mime type');
-    if(false){
+    let error = new Error("Invalid mime type");
+    if (isValid) {
       error = null;
     }
-    cb(error, DIR);
+    cb(error, "./src/assets/productImages");
   },
-  filename: (req,file,cb)=>{
-    const name = file.originalname.toLocaleLowerCase.split(' ').join('-');
+  filename: (req, file, cb) => {
+    const name = file.originalname
+      .toLowerCase()
+      .split(" ")
+      .join("-");
     const ext = MIME_TYPE_MAP[file.mimetype];
-    cb(null, name + '-' + "fileuploaded" + '.' + ext);
+    cb(null, name + "-" + Date.now() + "." + ext);
   }
 });
 
@@ -440,7 +442,16 @@ app.route('/product/:id').get((req, res)=>{
 
 
 //Inserting a product to the database
-app.route('/newproduct').post( multer({storage:storage}).single("image"), (req, res)=>{
+app.route('/newproduct').post(checkAuth, multer({ storage: storage }).single("image"),
+(req, res, next) =>{
+  const userRole = req.userData.role;
+  console.log("THE USER ROLEEEEEEEEEE");
+  console.log(userRole);
+  if(userRole != 'admin'){
+    console.log("User is trying to add a new product");
+    res.status(400).json({message: "Adding produts is just for admin"});
+    return;
+  }
   const bodyreq = req.body;
   console.log(bodyreq);
   const categoryName = req.body.category;
@@ -449,25 +460,20 @@ app.route('/newproduct').post( multer({storage:storage}).single("image"), (req, 
   console.log(categoryName);
   con.query(`SELECT id FROM categories WHERE categoryName='${categoryName}'`,  (err, data)=>{
     if(err){
-/*       console.log(err);
-      console.log("Calculating the category Id failed"); */
+      console.log(err);
       res.send(err);
     }else{
-/*       console.log("This is the file");
-      //console.log(req.file.filename);
-      console.log("This is the image");
-      console.log(req.file.filename);
-      console.log("This is the bodyrequest");
-      console.log(bodyreq.image); */
+      const filename = req.file.filename;
+      let filenameWithPath = "../src/assets/productImages/" + filename;
       categoryId = data[0].id;
       con.query(`INSERT INTO products (name, price, category, description, image) values
-      ('${req.body.name}', '${req.body.price}', '${categoryId}','${req.body.description}','../image/image')`,
+      ('${req.body.name}', '${req.body.price}', '${categoryId}','${req.body.description}','${filenameWithPath}')`,
       (err)=>{
             if(err){
             console.log(err);
             console.log("Inserting product into db failed");
 
-            res.send(err);
+            res.status(400).send();
             }else{
             console.log("Yes! Product added successfully");
             console.log(bodyreq);
@@ -475,7 +481,7 @@ app.route('/newproduct').post( multer({storage:storage}).single("image"), (req, 
             console.log("This is the id");
             console.log(categoryId);
 
-            res.status(200).send(bodyreq);
+            res.status(200).send();
             }
             })
     }
