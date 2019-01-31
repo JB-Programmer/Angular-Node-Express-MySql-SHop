@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { DataService } from './../../services/data.service';
 import { ActivatedRoute, ROUTER_CONFIGURATION } from '@angular/router';
 import {AuthService } from '../../services/auth.service';
-
+import {mimeType} from './mime-type.validator';
 
 @Component({
   selector: 'app-add-product',
@@ -16,7 +16,7 @@ export class AddProductComponent implements OnInit {
   // TODO EASY TO BRING AL THE CATEGORIES AND PUT IT LIKE AN INPUT SELECTOR
   thecategories: any;
   thedescription: string;
-  theprice: number;
+  theprice: any;
   thecategory: any;
   theproductid;
   imagePreview;
@@ -34,7 +34,7 @@ export class AddProductComponent implements OnInit {
       }),
       'thecategory': new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]
       }),
-      'image' : new FormControl(null, {validators: [Validators.required]})
+      'image' : new FormControl(null, {validators: [Validators.required], asyncValidators:[mimeType]})
     });
 
 
@@ -52,7 +52,7 @@ export class AddProductComponent implements OnInit {
     }
     console.log(this.form.value);
     // tslint:disable-next-line:max-line-length
-    this.dataService.createProduct(this.form.value.theproductname, this.form.value.thecategory, this.form.value.thedescription, this.form.value.theprice, 'The Image');
+    this.dataService.createProduct(this.form.value.theproductname, this.form.value.thecategory, this.form.value.thedescription, this.form.value.theprice, this.form.value.image);
     this.form.reset();
     return;
 
@@ -78,7 +78,7 @@ export class AddProductComponent implements OnInit {
     //console.log(this.form);
     const reader = new FileReader();
     reader.onload = () => {
-      this.imagePreview = reader.result;
+      this.imagePreview = <string>reader.result;
     }
     reader.readAsDataURL(file);
 

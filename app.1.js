@@ -15,8 +15,31 @@ var morgan = require('morgan');
 
 const checkAuth = require('./appMiddleware');
 
+const multer = require("multer");
 
+const MIME_TYPE_MAP = {
+  'image/png': 'png',
+  'image/jpeg': 'jpeg',
+  'image/jpg': 'jpg'
 
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) =>{
+    //I check also in the backend that the file is a picture;
+    const isValid = MIME_TYPE_MAP[file.mimetype];
+    let error = new Error('Invalid mime type');
+    if(isValid){
+      error = null;
+    }
+    cb(error, "./src/assets/productImages");
+  },
+  filename: (req,file,cb)=>{
+    const name = file.originalname.toLocaleLowerCase.split(' ').join('-');
+    const ext = MIME_TYPE_MAP[file.mimetype];
+    cb(null, name + '-' + Date.now() + '.' + ext);
+  }
+});
 
 //Not used finally
 /*
@@ -417,7 +440,7 @@ app.route('/product/:id').get((req, res)=>{
 
 
 //Inserting a product to the database
-app.route('/newproduct').post((req, res)=>{
+app.route('/newproduct').post( multer({storage:storage}).single("image"), (req, res)=>{
   const bodyreq = req.body;
   console.log(bodyreq);
   const categoryName = req.body.category;

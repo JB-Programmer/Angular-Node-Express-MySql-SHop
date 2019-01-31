@@ -4,6 +4,8 @@ import { Response } from '@angular/http';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from 'src/model/productsToAddInterface';
+import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { title } from 'process';
 
 
 
@@ -52,7 +54,14 @@ export class DataService {
 */
 
 
-createProduct(name: string, category: string, description: string, price: number, image: string){
+createProduct(name: string, category: string, description: string, price: any, image:File){
+    const theData = new FormData();
+    theData.append("name", name);
+    theData.append("category", category);
+    theData.append("description", description);
+    theData.append("price", price);
+    theData.append("image", image, title);
+
     // const theNewProduct: Product = {name: name, category: category, description: description, price: price, image: image};
     const theNewProduct = {name: name, category: category, description: description, price: price, image: image};
     console.log("http post /newproduct has been called");
